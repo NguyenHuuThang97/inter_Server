@@ -6,14 +6,11 @@ var app = express();
 const PORT = process.env.PORT || 5000;
 var user = require("./models/user.model");
 var userRouter = require("./router/use.router");
-
-//jsonwebtoken = require("jsonwebtoken");
-//app.use(allowCrossDomain);
+var customerRouter = require("./router/customer.routes");
+var oderDetailRouter = require("./router/oder_detail.routes");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// app.use(express.static(__dirname));
 jsonwebtoken = require("jsonwebtoken");
 var allowCrossDomain = function(req,res,next){
   res.header('Access-Control-Allow-Origin', '*');
@@ -24,6 +21,8 @@ var allowCrossDomain = function(req,res,next){
 }
 app.use(allowCrossDomain);
 app.use('/api',userRouter());
+ app.use('/api',customerRouter());
+ app.use('/api', oderDetailRouter());
 app.use('/uploads', express.static('uploads'));
 app.listen(PORT, function() {
   console.log("Listening on " + PORT);

@@ -16,6 +16,7 @@ var UserSchema = new Schema({
       trim: true,
       required:true
     },
+      
     hash_password: {
       type: String,
       required:true

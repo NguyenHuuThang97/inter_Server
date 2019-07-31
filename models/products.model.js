@@ -2,36 +2,43 @@ const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema({
     // _id: { type: mongoose.Schema.Types.ObjectId },
-    ten: {
+    name: {
         type: String,
         required: true
     },
-    giabandau: {
-        type: String,
-        required: true
-    },
-    anh: {
+    image: {
         type: String,
         required:true
     },
-    giamgia: {
-        type: String
-    },
-    trangthai:{
+    status:{
         types:String
     },
-    giahientai: {
+    price: {
         type: String,
         required: true
     },
-    ngay:{
+    day:{
         type: Date,
         default: Date.now
     },
-    soluong:{
+    quantity:{
         type: Number,
         required:true
-    }
+    },
+    lengthProduct:{
+        type:Number
+    },
+    description:{
+        type:String
+    },
+    comment:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Comment'
+    }],
+    cate:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Cate'
+    }]
 
 });
 

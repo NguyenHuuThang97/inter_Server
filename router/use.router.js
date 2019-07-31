@@ -1,5 +1,6 @@
 var userController = require("./../controllers/user.controller");
 var productController = require("./../controllers/product.controller")
+var customerController = require("../controllers/customer.controller")
 var router = require("express").Router();
 const mongoose = require("mongoose");
 const multer = require('multer');
@@ -43,29 +44,28 @@ module.exports = function () {
     router.post("/user/sign", userController.sign_in);
     router.get("/product/allProduct", productController.getAllProduct);
     router.get("/product/oneProduct/:id", productController.getOneProduct);
-    router.post("/product/createProduct", upload.single('anh') , (req, res, next) => {
+    router.post("/product/createProduct", upload.single('image') , (req, res, next) => {
         console.log(res.file);
         const newProduct = new Product({
-            ten:req.body.ten,
-            giabandau:req.body.giabandau,
-            anh:req.file.path,
-            giamgia:req.body.giamgia,
-            giahientai:req.body.giahientai,
-            soluong:req.body.soluong,
-            trangthai:req.body.trangthai
+            name:req.body.name,
+            image:req.file.path,
+            status:req.body.status,
+            price:req.body.price,
+            quantity:req.body.quantity,
+            description:req.body.description,
+
         });
         newProduct.save().then(result => {
             console.log(result);
             res.status(201).json({
                 message: "Created product successfully",
                 createProduct: {
-                    ten: result.ten,
-                    giabandau: result.giabandau,
-                     anh:result.anh,
-                    giamgia:result.giamgia,
-                    giahientai:result.giahientai,
-                    soluong:result.soluong,
-                    trangthai:result.trangthai
+                    name: result.name,
+                     image:result.image,
+                    status:result.status,
+                    price:result.price,
+                    quantity:result.quantity,
+                    description:result.trangthai
                 }
             });
         }).catch(err => {
@@ -75,7 +75,7 @@ module.exports = function () {
             });
         });
     });
-    router.delete("/product/delete",productController.deleteProduct);
+    router.delete("/product/delete/:id",productController.deleteProduct);
     router.get("/product/findbyproductname/:ten", productController.findProductByName);
     return router;
 }
