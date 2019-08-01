@@ -7,11 +7,12 @@ const productSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: String,
-        required:true
+        type: String    
+      //  required:true
     },
-    status:{
-        types:String
+    state:{
+        type:String,
+        required:true
     },
     price: {
         type: String,
@@ -29,16 +30,17 @@ const productSchema = mongoose.Schema({
         type:Number
     },
     description:{
-        type:String
+        type:String,
+        required:true
     },
     comment:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Comment'
     }],
-    cate:[{
+    cate:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Cate'
-    }]
+    }
 
 });
 

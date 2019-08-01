@@ -5,6 +5,12 @@ var router = require("express").Router();
 const mongoose = require("mongoose");
 const multer = require('multer');
 const Product = require("../models/products.model");
+const AWS = require('aws-sdk');
+const Busboy = require('busboy');
+
+const BUCKET_NAME = '';
+const IAM_USER_KEY = '';
+const IAM_USER_SECRET = '';
 //khởi tạo biến cấu hình cho việc lưu trữ file update
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -49,7 +55,7 @@ module.exports = function () {
         const newProduct = new Product({
             name:req.body.name,
             image:req.file.path,
-            status:req.body.status,
+            state:req.body.state,
             price:req.body.price,
             quantity:req.body.quantity,
             description:req.body.description,
@@ -62,10 +68,10 @@ module.exports = function () {
                 createProduct: {
                     name: result.name,
                      image:result.image,
-                    status:result.status,
+                    state:result.state,
                     price:result.price,
                     quantity:result.quantity,
-                    description:result.trangthai
+                    description:result.description
                 }
             });
         }).catch(err => {
