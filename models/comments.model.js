@@ -11,10 +11,14 @@ const commentSchema = mongoose.Schema({
     status:{
         type:String
     },
-    customer:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Customer'
-    }],
+    email:{
+        type:String,
+        require:true
+    },
+    phone:{
+        type:String,
+        require:true
+    },
     product:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Customer'

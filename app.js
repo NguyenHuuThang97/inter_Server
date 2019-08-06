@@ -2,6 +2,7 @@ var db = require("./db");
 var express = require("express");
 //khởi tạo server
 const bodyParser = require("body-parser");
+
 var app = express();
 const PORT = process.env.PORT || 5000;
 var user = require("./models/user.model");
@@ -25,9 +26,9 @@ app.use('/api',userRouter());
  app.use('/api', oderDetailRouter());
  app.use('/api', cateRouter());
 app.use('/uploads', express.static('uploads'));
-// app.listen(PORT, function() {
-//   console.log("Listening on " + PORT);
-// });
+app.listen(PORT, function() {
+  console.log("Listening on " + PORT);
+});
 
 app.get("/", (req, res) => {
   res.send("listening on " + PORT);
