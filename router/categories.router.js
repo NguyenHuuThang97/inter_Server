@@ -6,5 +6,6 @@ module.exports = function(){
     route.get("/cate/getAll", cateController.getAllCate);
     route.delete("/cate/deletecate/:id",cateController.deleteCate);
     route.put("/cate/:id",cateController.updateCate)
+    route.get("/cate/getOne/:id",cateController.getOneCate)
     return route;
 }

@@ -5,6 +5,10 @@ const oderschema = mongoose.Schema({
         type:Date,
         default: Date.now
     },
+    status:{
+        type:Number,
+        default:0
+    },
     oder_detail:[{
         type:String,
         ref:'OderDetail'
@@ -14,8 +18,12 @@ const oderschema = mongoose.Schema({
         ref:'Customer'
     },
     total:{
-        type: String,
+        type: Number,       
         require:true
+    },
+    employee:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     }
 })
 module.exports = mongoose.model('Oder',oderschema);

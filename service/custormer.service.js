@@ -22,7 +22,7 @@ function getAllCustomer(callback) {
 
 function getOneCustomer(id) {
     return new Promise((res, rej) => {
-        customer.findOne({ _id: id }).exec((err, customerData) => {
+        customer.findById(id).populate('oder').exec((err, customerData) => {
             if (err) {
                 rej(err)
             } else {
@@ -32,7 +32,7 @@ function getOneCustomer(id) {
                         message: message.ERROR_MESSAGE.CUSTOMER.NOT_FOUND
                     })
                 } else {
-                    rej(customerData)
+                    res(customerData)
                 }
             }
         })

@@ -24,7 +24,11 @@ var UserSchema = new Schema({
     created: {
       type: Date,
       default: Date.now
-    }
+    },
+    oder:[{
+      type:mongooes.Schema.Types.ObjectId,
+      ref:'Oder'
+    }]
   });
 
 var User = mongooes.model('User', UserSchema);

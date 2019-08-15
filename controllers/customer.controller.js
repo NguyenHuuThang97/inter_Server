@@ -6,10 +6,10 @@ var message = require("../until/message")
 
 module.exports = {
     getAllCustomer: getAllCustomer,
-   // getOneCustomer: getOneCustomer,
+    getOneCustomer: getOneCustomer,
     createCustomer: createCustomer,
     deleteCustomer: deleteCustomer,
-   // updateCustomer: updateCustomer
+    updateCustomer: updateCustomer
 }
 
 function createCustomer(req,res){
@@ -38,6 +38,29 @@ function getAllCustomer(req,res,next){
         }
     })
 }
+function getOneCustomer(req,res,next){
+    let id = req.params.id;
+    if(!id){
+        res.status(400).send({
+            message: message.ERROR_MESSAGE.PRODUCT.INVALD
+        })
+    }
+    customerService.getOneCustomer(id).then(response =>{
+        res.send(response)
+    }).catch(err =>{
+        res.status(err.statusCode).send(err)
+    })
+}
+function updateCustomer(req,res,next){
+    var _id = req.params.id;
+    var customerData = req.body;
+    customerService.updateCustomer(_id, customerData).then(() => {
+        res.send(customerData);
+    }).catch(err => {
+        res.status(400).send(err);
+    })
+}
+
 function deleteCustomer(req,res,next){
     let id = req.body.id;
     customerService.deleteCustomer(id).then((response ) =>{
@@ -46,3 +69,4 @@ function deleteCustomer(req,res,next){
         res.status(err.statusCode).send(err)
     })
 }
+

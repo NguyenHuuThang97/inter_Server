@@ -10,6 +10,9 @@ var userRouter = require("./router/use.router");
 var customerRouter = require("./router/customer.routes");
 var oderDetailRouter = require("./router/oder_detail.routes");
 var cateRouter = require("./router/categories.router");
+var oderRouter = require("./router/oder.router");
+var eventRouter = require("./router/event.router");
+var commentRouter = require("./router/comment.router");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 jsonwebtoken = require("jsonwebtoken");
@@ -25,7 +28,11 @@ app.use('/api',userRouter());
  app.use('/api',customerRouter());
  app.use('/api', oderDetailRouter());
  app.use('/api', cateRouter());
+ app.use('/api',oderRouter());
+ app.use('/api',eventRouter());
+ app.use('/api',commentRouter());
 app.use('/uploads', express.static('uploads'));
+
 app.listen(PORT, function() {
   console.log("Listening on " + PORT);
 });

@@ -7,7 +7,9 @@ const multer = require('multer');
 const Product = require("../models/products.model");
 const AWS = require('aws-sdk');
 const Busboy = require('busboy');
-
+var path = require("path")
+const cateService = require("../service/categories.service");
+const Cate = require('../models/categories.model');
 const BUCKET_NAME = '';
 const IAM_USER_KEY = '';
 const IAM_USER_SECRET = '';
@@ -50,30 +52,25 @@ module.exports = function () {
     router.post("/user/sign", userController.sign_in);
     router.get("/product/allProduct", productController.getAllProduct);
     router.get("/product/oneProduct/:id", productController.getOneProduct);
-    router.post("/product/createProduct", upload.single('image') , (req, res, next) => {
-        console.log(res.file);
+    router.post("/product/createProduct", upload.single('image'), (req, res, next) => {
         const newProduct = new Product({
-            name:req.body.name,
-            image:req.file.path,
-            state:req.body.state,
-            price:req.body.price,
-            quantity:req.body.quantity,
-            description:req.body.description,
-
+            name: req.body.name,
+            image: req.file.path,
+            state: req.body.state,
+            price: req.body.price,
+            quantity: req.body.quantity,
+            description: req.body.description,
+            cate: req.body.cate
         });
         newProduct.save().then(result => {
-            console.log(result);
-            res.status(201).json({
-                message: "Created product successfully",
-                createProduct: {
-                    name: result.name,
-                     image:result.image,
-                    state:result.state,
-                    price:result.price,
-                    quantity:result.quantity,
-                    description:result.description
-                }
-            });
+            if (result) {
+                cateService.updateCate(req.body.cate, { $push: { product: result._id } }).then(() => {
+                    res.send("succsess")
+                }).catch(err => res.send(err))
+            }
+            res.status(200).json({
+                message: "Add the cate successfully"
+            })
         }).catch(err => {
             console.log(err);
             res.status(500).json({
@@ -81,7 +78,8 @@ module.exports = function () {
             });
         });
     });
-    router.delete("/product/delete/:id",productController.deleteProduct);
+    router.put("/product/updateProduct/:id",productController.updateProduct);
+    router.delete("/product/delete/:id", productController.deleteProduct);
     router.get("/product/findbyproductname/:ten", productController.findProductByName);
     return router;
 }

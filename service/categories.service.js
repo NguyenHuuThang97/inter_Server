@@ -5,7 +5,8 @@ mongoose.set('useFindAndModify', false);
  module.exports = {
     getAllCate: getAllCate,
     updateCate:updateCate,
-    deleteCate:deleteCate
+    deleteCate:deleteCate,
+    getOneCate:getOneCate
 }
 
 function getAllCate(callback){
@@ -16,6 +17,25 @@ function getAllCate(callback){
         else {
             callback(null, cates)
         }
+    })
+}
+
+function getOneCate(id){
+    return new Promise((res,rej) =>{
+        cate.findById(id).populate('product').exec((err,cateData) =>{
+            if(err){
+                rej(err)
+            }else{
+                if(!cateData){
+                    rej({
+                        statusCode:400,
+                        message:message.ERROR_MESSAGE.PRODUCT.NOT_FOUND
+                    })
+                }else{
+                    res(cateData)
+                }
+            }
+        })
     })
 }
 function updateCate(id,cateData){

@@ -6,7 +6,8 @@ const commentSchema = mongoose.Schema({
         default: Date.now
     },
     message:{
-        type: String
+        type: String,
+        require:true
     },
     status:{
         type:String
@@ -21,7 +22,11 @@ const commentSchema = mongoose.Schema({
     },
     product:[{
         type:mongoose.Schema.Types.ObjectId,
+        ref:'Product'
+    }],
+    customer:{
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Customer'
-    }]
+    }
 })
 module.exports = mongoose.model('Comment', commentSchema)

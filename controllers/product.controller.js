@@ -56,7 +56,7 @@ function getOneProduct(req, res, next) {
     })
 }
 function updateProduct(req, res, next) {
-    var _id = req.body.id;
+    var _id = req.params.id;
     var productData = req.body;
     productService.updateProduct(_id, productData).then(() => {
         res.send(productData);
